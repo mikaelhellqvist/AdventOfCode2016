@@ -1,25 +1,33 @@
-//
-//  ViewController.swift
-//  Day 2
-//
-//  Created by Mikael Hellqvist on 2016-12-05.
-//  Copyright © 2016 Mikael Hellqvist. All rights reserved.
-//
-
 import UIKit
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        let code = readFile()
+        let converter = Converter()
+        let codeHint = converter.convertDataToArrays(code: code)
+        
+        let codeBoxPartI = CodeBox(codeSheet: codeHint, isSimple: true)
+        print(codeBoxPartI.crackCode())
+        
+        let codeBoxPartII = CodeBox(codeSheet: codeHint, isSimple: false)
+        print(codeBoxPartII.crackCode())
+
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
 
-
+    
+    func readFile() -> String {
+        let path = Bundle.main.path(forResource: "Code", ofType: "txt")
+        let text = try! String(contentsOfFile: path!, encoding: .utf8)
+        
+        return text
+    }
 }
 
